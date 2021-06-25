@@ -1,1 +1,27 @@
-<p>page-soft works!</p>
+<div class="main-content">
+  <div class="section__content section__content--p30">
+    <h1>База Эталонов СПО</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <app-filter-soft
+            (dateFilterOut)="dateFilter($event)"
+          ></app-filter-soft>
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-table-soft
+            [soft]="allSoft"
+            (deleteSoft)="onDeleteSoft($event)"
+            (addSoft)="onAddSoft($event)"
+            (updateSoft)="onUpdateSoft($event)"
+          ></app-table-soft>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

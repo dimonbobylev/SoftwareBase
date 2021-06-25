@@ -1,0 +1,49 @@
+.col-id {
+  width: 5%;
+  text-align: center;
+}
+.col-inv {
+  width: 10%;
+  /*text-align: center;*/
+}
+.col-date {
+  width: 13%;
+  /*text-align: center;*/
+}
+.col-article {
+  width: 9%;
+  /*text-align: center;*/
+}
+.col-article {
+  width: 9%;
+  /*text-align: center;*/
+}
+.col-title {
+  width: 45% !important;
+}
+.col-operations {
+  width: 9%;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: #ea6561;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.edit-icon {
+  cursor: pointer;
+  color: #9A9A9A;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.mat-header-cell {
+  font-size: 1.063rem;
+  /*color: #9c27b0 !important;*/
+  font-weight: normal;
+}
+

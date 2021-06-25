@@ -1,0 +1,118 @@
+<mat-dialog-content xmlns="http://www.w3.org/1999/html">
+  <p mat-dialog-title>{{dialogTitle}}</p>
+  <!--inv    -->
+  <mat-form-field>
+    <mat-label>Инвентарный номер (обязательно)</mat-label>
+    <input
+      #inputTitle
+      (keydown.enter)="onConfirm()"
+      [(ngModel)]="tmpNom"
+      matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
+
+    <button
+      (click)="tmpNom= ''"
+      *ngIf="tmpNom.trim().length > 0" aria-label="Clear" class="size25" mat-button
+      mat-icon-button matSuffix>
+      <mat-icon>delete</mat-icon>
+    </button>
+
+  </mat-form-field>
+  <!--    календарь - дата поставки-->
+  <mat-form-field>
+
+    <input
+      matInput placeholder="Укажите дату поставки" #inputDate
+      readonly="true"
+      [matDatepicker]="picker"
+      [(ngModel)]="tmpDate"
+      (click)="picker.open()">
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <!-- иконка календаря (для открытия календаря) -->
+
+    <mat-datepicker #picker></mat-datepicker> <!-- компонент календаря (открывается по нажатию)-->
+
+    <!--кнопка очистки даты -->
+    <button
+      *ngIf="inputDate.value.trim().length > 0"
+
+      mat-button matSuffix mat-icon-button aria-label="Clear"
+
+      (click)="tmpDate = null" class="size25">
+
+      <mat-icon>delete</mat-icon>
+
+    </button>
+
+  </mat-form-field>
+
+  <!--    выпадающий список изделий-->
+  <mat-form-field>
+    <mat-label>Укажите изделие</mat-label>
+
+    <mat-select [(ngModel)]="tmpArticle">
+      <mat-option *ngFor="let ar of article" [value]="ar">
+        {{ar}}
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+  <!--    выпадающий список os-->
+  <mat-form-field *ngIf="osForArticle.includes(tmpArticle)">
+    <mat-label>Укажите ОС</mat-label>
+
+    <mat-select [(ngModel)]="tmpOs">
+      <mat-option *ngFor="let ar of os" [value]="ar">
+        {{ar}}
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+
+  <!--Примечание    -->
+  <mat-form-field>
+
+    <mat-label>Примечание (обязательно)</mat-label>
+    <input
+      #inputTitle
+      (keydown.enter)="onConfirm()"
+
+      [(ngModel)]="tmpTitle"
+
+      matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
+
+    <button
+      (click)="tmpTitle= ''"
+
+      *ngIf="tmpTitle.trim().length > 0" aria-label="Clear" class="size25" mat-button
+
+      mat-icon-button matSuffix>
+
+      <mat-icon>delete</mat-icon>
+    </button>
+
+  </mat-form-field>
+
+</mat-dialog-content>
+
+
+<!--  кнопки возможных действий-->
+<mat-dialog-actions>
+
+  <button
+    (click)="onConfirm()" [disabled]="inputTitle.value.trim().length==0"
+    color="primary"
+    mat-raised-button>  <!-- если пустой текст - кнопка "Сохранить" будет недоступна -->
+    Сохранить
+  </button>
+
+
+  <button (click)="onCancel()" mat-raised-button>Отмена</button>
+  <button mat-button class="red" (click)="delete()">Удалить эталон</button>
+
+
+</mat-dialog-actions>
+
+
+
+

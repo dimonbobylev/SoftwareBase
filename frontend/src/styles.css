@@ -1,5 +1,24 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "assets/style/theme.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.pointer {
+  cursor: pointer;
+}
+
+.size25 {
+  font-size: 25px !important;
+}
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-dialog-container {
+  padding: 40px !important;
+}
+.red{
+  color: red;
+}
