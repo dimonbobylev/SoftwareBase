@@ -23,6 +23,10 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
+import { FilterOrderComponent } from './components/page-order/filter-order/filter-order.component';
+import { StatisticsOrderComponent } from './components/page-order/statistics-order/statistics-order.component';
+import { TableOrderComponent } from './components/page-order/table-order/table-order.component';
+import { EditDialogOrderComponent } from './dialog/edit-dialog-order/edit-dialog-order.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import {MatNativeDateModule} from '@angular/material/core';
     FilterSoftComponent,
     StatisticsSoftComponent,
     EditDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    FilterOrderComponent,
+    StatisticsOrderComponent,
+    TableOrderComponent,
+    EditDialogOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +64,7 @@ import {MatNativeDateModule} from '@angular/material/core';
   providers: [],
   entryComponents: [
     EditDialogComponent,
+    EditDialogOrderComponent,
     ConfirmDialogComponent
   ],
   bootstrap: [AppComponent]

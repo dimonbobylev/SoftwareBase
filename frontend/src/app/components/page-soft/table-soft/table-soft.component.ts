@@ -37,6 +37,8 @@ export class TableSoftComponent implements OnInit {
   updateSoft = new EventEmitter<SoftCD>();
   @Output()
   deleteSoft = new EventEmitter<SoftCD>();
+  @Output()
+  articleStat = new EventEmitter<SoftCD>();
 
   constructor(
     private dataHandler: DataHandlerService, // доступ к данным
@@ -120,6 +122,7 @@ export class TableSoftComponent implements OnInit {
   }
 
   articleStatistics(element): void {
+    this.articleStat.emit(element);
   }
 
 }

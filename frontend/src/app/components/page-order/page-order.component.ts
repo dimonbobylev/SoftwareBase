@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Order, StatisticsArray} from '../../model/allclass';
 
 @Component({
   selector: 'app-page-order',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageOrderComponent implements OnInit {
 
+  @Input() allOrder: Order[];
+  @Input() statArray: StatisticsArray[];
+  @Output()
+  addOrder = new EventEmitter<Order>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onAddOrder(order: Order): void {
+    this.addOrder.emit(order);
+  }
 }

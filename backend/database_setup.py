@@ -18,12 +18,26 @@ Base = declarative_base()
 class Soft(Base):
     __tablename__ = 'soft'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     inv = Column(String(50), nullable=False)
     date = Column(DateTime(), nullable=False)
     article = Column(String(21), nullable=False)
     os = Column(String(21))
     title = Column(String(150))
+
+
+class Order(Base):
+    __tablename__ = 'orderKCh'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    inv = Column(String(50), nullable=False)
+    ord = Column(String(50), nullable=False)
+    date = Column(DateTime(), nullable=False)
+    count = Column(Integer, nullable=False)
+    time = Column(Integer, nullable=False)
+    act = Column(String(50))
+    title = Column(String(150))
+
 
 # создает экземпляр create_engine в конце файла
 engine = create_engine('sqlite:///soft-collection.db')

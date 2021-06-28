@@ -16,6 +16,7 @@
 <div class="main-content" *ngIf="toggleArticle">
   <app-page-soft
     [allSoft]="allSoft"
+    [statArray]="statisticsArray"
     (addSoft)="onAddSoft($event)"
     (updateSoft)="onUpdateSoft($event)"
     (deleteSoft)="onDeleteSoft($event)"
@@ -23,5 +24,9 @@
   ></app-page-soft>
 </div>
 <div class="main-content" *ngIf="toggleOrder">
-  <app-page-order></app-page-order>
+  <app-page-order
+    [allOrder]="allOrder"
+    [statArray]="statisticsArray"
+    (addOrder)="onAddOrder($event)"
+  ></app-page-order>
 </div>

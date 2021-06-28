@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {StatisticsArray} from '../../../model/allclass';
 
 @Component({
   selector: 'app-statistics-soft',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./statistics-soft.component.css']
 })
 export class StatisticsSoftComponent implements OnInit {
+
+  @Input() articleStatistics: string;
+  @Input() statArray: StatisticsArray[];
 
   constructor() { }
 

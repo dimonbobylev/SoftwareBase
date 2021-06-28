@@ -9,7 +9,10 @@
           ></app-filter-soft>
         </div>
         <div class="col-6">
-
+          <app-statistics-soft
+            [articleStatistics]="articleStatistics"
+            [statArray]="statArray"
+          ></app-statistics-soft>
         </div>
       </div>
       <div class="row">
@@ -19,6 +22,7 @@
             (deleteSoft)="onDeleteSoft($event)"
             (addSoft)="onAddSoft($event)"
             (updateSoft)="onUpdateSoft($event)"
+            (articleStat)="articleStat($event)"
           ></app-table-soft>
         </div>
       </div>

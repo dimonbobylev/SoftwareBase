@@ -16,18 +16,20 @@ export class SoftCD {
   }
 }
 export class Order {
+  id: number;
   inv: string;
-  order: string;
-  dateOrder: Date;
+  ord: string;
+  date: Date;
   count: number;
   time: number;
   act?: string;
   title?: string;
 
-  constructor(inv: string, order: string, dateOrder: Date, count: number, time: number, act?: string, title?: string) {
+  constructor(id: number, inv: string, ord: string, date: Date, count: number, time: number, act?: string, title?: string) {
+    this.id = id;
     this.inv = inv;
-    this.order = order;
-    this.dateOrder = dateOrder;
+    this.ord = ord;
+    this.date = date;
     this.count = count;
     this.time = time;
     this.act = act;

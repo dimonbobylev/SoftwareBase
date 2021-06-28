@@ -1,1 +1,26 @@
-<p>page-order works!</p>
+<div class="main-content">
+  <div class="section__content section__content--p30">
+    <h1>База Приказов КЧ</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <app-filter-order></app-filter-order>
+        </div>
+        <div class="col-6">
+          <app-statistics-order
+            [statArray]="statArray"
+          ></app-statistics-order>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-table-order
+            [orders]="allOrder"
+            (addOrder)="onAddOrder($event)"
+          ></app-table-order>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

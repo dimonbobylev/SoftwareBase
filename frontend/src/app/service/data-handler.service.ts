@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs';
-import {SoftCD, StatisticsArray} from '../model/allclass';
+import {Order, SoftCD, StatisticsArray} from '../model/allclass';
 
 
 @Injectable({
@@ -14,8 +14,8 @@ export class DataHandlerService {
 
   constructor() { }
 
-
-  getStatistics(soft: SoftCD[]): StatisticsArray[] {
+// подсчет статистики по годам для поставок СПО, а также для приказов КЧ
+  getStatistics(soft: SoftCD[] | Order[]): StatisticsArray[] {
     // console.log('DataHandlerService: ', soft);
     for (const item of soft) {
       const year = (String(item.date)).slice(0, 4);

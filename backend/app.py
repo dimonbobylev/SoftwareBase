@@ -5,7 +5,7 @@ from flask_cors import CORS
 import sqlite3 as sq
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Soft
+from database_setup import Base, Soft, Order
 import result
 
 
@@ -38,16 +38,25 @@ def soft_cd():
 @app.route("/onAddSoft", methods=['POST'])
 def add_soft():
     f = request.json
+    print(f)
     date = f['date']
     a = datetime.date(int(date[0:4]), int(date[5:7]), int(date[8:10]))
-    new_soft = Soft(inv=f['inv'], date=a, article=f['article'], os=f['os'], title=f['title'])
-    session.add(new_soft)
-    session.commit()
-    # print(newSoft)
+    # new_soft = Soft(inv=f['inv'], date=a, article=f['article'], os=f['os'], title=f['title'])
+    # for res in new_soft:
+    #     print(res)
+    # session.add(new_soft)
+    with sq.connect("soft-collection.db") as con:
+        cur = con.cursor()
+        sql_update = "INSERT INTO soft (inv, date, article, os, title) VALUES(" + "'" + str(f['inv']) + "'," + \
+                 "'" + str(f['date']) + "'," + "'" + str(f['article']) + "'," + "'" + str(f['os']) + "'," + \
+                 "'" + str(f['title']) + "')"
+        # print(sql_update)
+        cur.execute(sql_update)
+        session.commit()
     try:
         with sq.connect("soft-collection.db") as con:
             cur = con.cursor()
-            cur.execute("SELECT id, inv, date, article, os, title FROM soft")
+            cur.execute("SELECT * FROM soft")
             res = cur.fetchall()
             list_bd = result.array_json(res)
     except sq.Error as e:
@@ -112,6 +121,60 @@ def date_filter():
     except sq.Error as e:
         session.rollback()
         print("Ошибка фильтрации БД")
+    return jsonify(list_bd)
+
+
+@app.route("/onArticleStat", methods=['POST'])
+def article_stat():
+    f = request.json
+    try:
+        with sq.connect("soft-collection.db") as con:
+            cur = con.cursor()
+            text_request = "SELECT * FROM soft WHERE article = " + "'" + str(f['article']) + "'"
+            cur.execute(text_request)
+            res = cur.fetchall()
+            list_bd = result.array_json(res)
+    except sq.Error as e:
+        session.rollback()
+        print("Ошибка удаления из БД")
+    return jsonify(list_bd)
+
+
+@app.route("/allOrder/", methods=['GET'])
+def all_order():
+    try:
+        with sq.connect("soft-collection.db") as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM orderKCh")
+            res = cur.fetchall()
+            list_bd = result.array_order(res)
+    except sq.Error as e:
+        session.rollback()
+        print("Ошибка открытия в БД")
+    return jsonify(list_bd)
+
+
+@app.route("/onAddOrder", methods=['POST'])
+def add_order():
+    f = request.json
+    with sq.connect("soft-collection.db") as con:
+        cur = con.cursor()
+        sql_update = "INSERT INTO orderKCh (inv, ord, date, count, time, act, title) VALUES(" + \
+                     "'" + str(f['inv']) + "'," + "'" + str(f['ord']) + "'," + "'" + str(f['date']) + "'," + \
+                 f['count'] + "," + f['time'] + "," + "'" + str(f['act']) + "'," + \
+                 "'" + str(f['title']) + "')"
+        print(sql_update)
+        cur.execute(sql_update)
+        session.commit()
+    try:
+        with sq.connect("soft-collection.db") as con:
+            cur = con.cursor()
+            cur.execute("SELECT * FROM orderKCh")
+            res = cur.fetchall()
+            list_bd = result.array_order(res)
+    except sq.Error as e:
+        session.rollback()
+        print("Ошибка добавления в БД")
     return jsonify(list_bd)
 
 

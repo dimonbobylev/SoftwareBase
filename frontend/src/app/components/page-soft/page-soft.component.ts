@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DateFind, SoftCD} from '../../model/allclass';
+import {DateFind, SoftCD, StatisticsArray} from '../../model/allclass';
+import {DataHandlerService} from '../../service/data-handler.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-page-soft',
@@ -7,6 +9,9 @@ import {DateFind, SoftCD} from '../../model/allclass';
   styleUrls: ['./page-soft.component.css']
 })
 export class PageSoftComponent implements OnInit {
+
+  articleStatistics: string;
+  statisticsArray: StatisticsArray[] = [];
 
   @Input() allSoft: SoftCD[];
   @Output()
@@ -17,8 +22,12 @@ export class PageSoftComponent implements OnInit {
   deleteSoft = new EventEmitter<SoftCD>();
   @Output()
   dateFilterOut = new EventEmitter<DateFind>();
+  @Input() statArray: StatisticsArray[];
 
-  constructor() { }
+  constructor(
+    private dataHandler: DataHandlerService,
+    private http: HttpClient
+    ) { }
 
   ngOnInit(): void {
   }
@@ -37,5 +46,13 @@ export class PageSoftComponent implements OnInit {
 
   dateFilter(dateFil: DateFind): void {
     this.dateFilterOut.emit(dateFil);
+  }
+
+  articleStat(article: SoftCD): void {
+    this.articleStatistics = article.article;
+    this.http.post<any>('http://127.0.0.1:5000/onArticleStat', article)
+      .subscribe(back => {
+        this.statisticsArray = this.dataHandler.getStatistics(back);
+      });
   }
 }
