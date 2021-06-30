@@ -3,26 +3,34 @@
   text-align: center;
 }
 .col-inv {
+  width: 7%;
+  /*text-align: center;*/
+}
+.col-ord {
+  width: 7%;
+  text-align: center;
+}
+.col-date {
   width: 10%;
   /*text-align: center;*/
 }
-.col-date {
-  width: 13%;
-  /*text-align: center;*/
+.col-count {
+  width: 6%;
+  text-align: center;
 }
-.col-article {
-  width: 9%;
-  /*text-align: center;*/
+.col-time {
+  width: 6%;
+  text-align: center;
 }
-.col-article {
-  width: 9%;
+.col-act {
+  width: 6%;
   /*text-align: center;*/
 }
 .col-title {
   width: 45% !important;
 }
 .col-operations {
-  width: 9%;
+  width: 8%;
 }
 
 .delete-icon {
@@ -45,4 +53,8 @@
   font-size: 1.063rem;
   /*color: #9c27b0 !important;*/
   font-weight: normal;
+}
+.completed {
+  color: #ea6561;
+  background-color: #C0C0C0;
 }

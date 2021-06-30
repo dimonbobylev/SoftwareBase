@@ -21,6 +21,8 @@ export class PageSoftComponent implements OnInit {
   @Output()
   deleteSoft = new EventEmitter<SoftCD>();
   @Output()
+  invNumClick = new EventEmitter<SoftCD>();
+  @Output()
   dateFilterOut = new EventEmitter<DateFind>();
   @Input() statArray: StatisticsArray[];
 
@@ -54,5 +56,9 @@ export class PageSoftComponent implements OnInit {
       .subscribe(back => {
         this.statisticsArray = this.dataHandler.getStatistics(back);
       });
+  }
+
+  invNumberClick(invClick: SoftCD): void {
+    this.invNumClick.emit(invClick);
   }
 }

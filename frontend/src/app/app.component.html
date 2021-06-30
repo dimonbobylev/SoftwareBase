@@ -21,12 +21,15 @@
     (updateSoft)="onUpdateSoft($event)"
     (deleteSoft)="onDeleteSoft($event)"
     (dateFilterOut)="dateFilter($event)"
+    (invNumClick)="invNumberClick($event)"
   ></app-page-soft>
 </div>
 <div class="main-content" *ngIf="toggleOrder">
   <app-page-order
     [allOrder]="allOrder"
-    [statArray]="statisticsArray"
+    [statArray]="statisticsArrayOrder"
     (addOrder)="onAddOrder($event)"
+    (deleteOrder)="onDeleteOrder($event)"
+    (updateOrder)="onUpdateOrder($event)"
   ></app-page-order>
 </div>

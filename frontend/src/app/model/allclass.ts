@@ -54,3 +54,13 @@ export class StatisticsArray  {
     this.count = count;
   }
 }
+export class StatisticsArrayOrder {
+  year: number;
+  count: string;
+
+  constructor(year: number, count: string) {
+    this.year = year;
+    this.count = count;
+  }
+}
+

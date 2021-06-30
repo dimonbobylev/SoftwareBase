@@ -4,7 +4,6 @@
   <mat-form-field>
     <mat-label>Инвентарный номер (обязательно)</mat-label>
     <input
-      #inputTitle
       (keydown.enter)="onConfirm()"
       [(ngModel)]="tmpInv"
       matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
@@ -21,7 +20,6 @@
   <mat-form-field>
     <mat-label>Приказ КЧ (обязательно)</mat-label>
     <input
-      #inputTitle
       (keydown.enter)="onConfirm()"
       [(ngModel)]="tmpOrder"
       matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
@@ -63,11 +61,10 @@
 
   </mat-form-field>
 
-  <!--order    -->
+  <!--count    -->
   <mat-form-field class="count">
     <mat-label>Количество АРМ на переустановку (обязательно)</mat-label>
     <input
-      #inputTitle
       (keydown.enter)="onConfirm()"
       [(ngModel)]="tmpCount"
       matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
@@ -80,11 +77,10 @@
     </button>
 
   </mat-form-field>
-  <!--order    -->
+  <!--time    -->
   <mat-form-field class="time">
     <mat-label>Время на переустановку (обязательно)</mat-label>
     <input
-      #inputTitle
       (keydown.enter)="onConfirm()"
       [(ngModel)]="tmpTime"
       matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
@@ -92,6 +88,22 @@
     <button
       (click)="tmpTime= 0"
       *ngIf="tmpTime > 0" aria-label="Clear" class="size25" mat-button
+      mat-icon-button matSuffix>
+      <mat-icon>delete</mat-icon>
+    </button>
+
+  </mat-form-field>
+  <!--act    -->
+  <mat-form-field>
+    <mat-label>Акт установки СПО</mat-label>
+    <input
+      (keydown.enter)="onConfirm()"
+      [(ngModel)]="tmpAct"
+      matInput> <!-- по нажатию на enter можем сразу сохранить поставку -->
+
+    <button
+      (click)="tmpAct= ''"
+      *ngIf="tmpAct.trim().length > 0" aria-label="Clear" class="size25" mat-button
       mat-icon-button matSuffix>
       <mat-icon>delete</mat-icon>
     </button>
@@ -136,7 +148,7 @@
 
 
   <button (click)="onCancel()" mat-raised-button>Отмена</button>
-  <button mat-button class="red" (click)="delete()">Удалить эталон</button>
+  <button mat-button class="red" (click)="delete()">Удалить запись</button>
 
 
 </mat-dialog-actions>

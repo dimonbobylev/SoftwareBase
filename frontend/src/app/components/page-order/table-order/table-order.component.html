@@ -7,7 +7,12 @@
       </mat-form-field>
     </div>
     <div class="text-end col-6" style="padding-top: 8px">
-      <button mat-raised-button color="primary" (click)="openAddSoftDialog()">Добавить</button>
+      <button mat-raised-button (click)="exportAsXLSX()" style="margin-right: 15px">
+        <abbr title="Сохранение текущей таблицы в формате Exel">
+          <img src="assets/img/ms-excel.png" class="img" height="35" width="35">
+        </abbr>
+      </button>
+      <button mat-raised-button color="primary" (click)="openAddOrderDialog()">Добавить</button>
     </div>
   </div>
   <div class="row">
@@ -19,53 +24,62 @@
         >
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef class="col-id"> # </th>
-            <td mat-cell *matCellDef="let index = index;" class="col-id"> {{index +1}} </td>
+            <td mat-cell *matCellDef="let element; let index = index;" class="col-id" [class.completed]="element.act===''">
+              {{index +1}} </td>
           </ng-container>
           <ng-container matColumnDef="inv">
-            <th mat-header-cell *matHeaderCellDef class="col-inv"> inv </th>
-            <td mat-cell *matCellDef="let element" class="col-inv"> {{element.inv}} </td>
+            <th mat-header-cell *matHeaderCellDef class="col-inv">Инв.</th>
+            <td mat-cell *matCellDef="let element" class="col-inv" [class.completed]="element.act===''">
+              {{element.inv}} </td>
           </ng-container>
           <ng-container matColumnDef="ord">
-            <th mat-header-cell *matHeaderCellDef class="col-inv"> order </th>
-            <td mat-cell *matCellDef="let element" class="col-inv"> {{element.ord}} </td>
+            <th mat-header-cell *matHeaderCellDef class="col-ord">Приказ</th>
+            <td mat-cell *matCellDef="let element" class="col-ord" [class.completed]="element.act===''">
+              {{element.ord}} </td>
           </ng-container>
           <ng-container matColumnDef="date">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-date"> dateOrder </th>
-            <td mat-cell *matCellDef="let element" class="col-date"> {{element.date | date: 'mediumDate' }} </td>
+            <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-date">Дата</th>
+            <td mat-cell *matCellDef="let element" class="col-date" [class.completed]="element.act===''">
+              {{element.date | date: 'mediumDate' }} </td>
           </ng-container>
 
           <ng-container matColumnDef="count">
-            <th mat-header-cell *matHeaderCellDef class="col-article"> count </th>
-            <td mat-cell *matCellDef="let element" class="col-article">
+            <th mat-header-cell *matHeaderCellDef class="col-count">
+              <abbr title="Количество переустановленных АРМ">АРМ</abbr></th>
+            <td mat-cell *matCellDef="let element" class="col-count" [class.completed]="element.act===''">
               {{element.count}}
             </td>
           </ng-container>
           <ng-container matColumnDef="time">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-os"> time </th>
-            <td mat-cell *matCellDef="let element" class="col-os">{{element.time}}</td>
+            <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-time">
+              <abbr title="Количество часов затраченных на переустановку всех АРМ">Время</abbr></th>
+            <td mat-cell *matCellDef="let element" class="col-time" [class.completed]="element.act===''">
+              {{element.time}}</td>
           </ng-container>
           <ng-container matColumnDef="act">
-            <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-os"> act </th>
-            <td mat-cell *matCellDef="let element" class="col-os">{{element.act}}</td>
+            <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-act">Акт</th>
+            <td mat-cell *matCellDef="let element" class="col-act" [class.completed]="element.act===''">
+              {{element.act}}</td>
           </ng-container>
 
           <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef class="col-title"> title </th>
-            <td mat-cell *matCellDef="let element" class="text-left"> {{element.title}} </td>
+            <th mat-header-cell *matHeaderCellDef class="col-title">Примечание</th>
+            <td mat-cell *matCellDef="let element" class="text-left" [class.completed]="element.act===''">
+              {{element.title}} </td>
           </ng-container>
           <!--доступные действия над задачей-->
           <ng-container matColumnDef="operations">
             <th *matHeaderCellDef mat-header-cell></th>
-            <td *matCellDef="let element" class="col-operations" mat-cell>
+            <td *matCellDef="let element" class="col-operations" mat-cell [class.completed]="element.act===''">
 
-              <button (click)="openDeleteDialog(element)" class="delete-icon"
+              <button (click)="openDeleteOrderDialog(element)" class="delete-icon"
                       mat-icon-button
               >
                 <mat-icon aria-hidden="false">delete</mat-icon>
               </button>
 
 
-              <button (click)="openEditDialog(element)" class="edit-icon"
+              <button (click)="openEditOrderDialog(element)" class="edit-icon"
                       mat-icon-button
               >
 

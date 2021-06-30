@@ -4,15 +4,20 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-6">
-          <app-filter-soft
+          <app-filter-data
             (dateFilterOut)="dateFilter($event)"
-          ></app-filter-soft>
+          ></app-filter-data>
         </div>
         <div class="col-6">
-          <app-statistics-soft
-            [articleStatistics]="articleStatistics"
-            [statArray]="statArray"
-          ></app-statistics-soft>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10">
+              <app-statistics-soft
+                [articleStatistics]="articleStatistics"
+                [statArray]="statArray"
+              ></app-statistics-soft>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -23,6 +28,7 @@
             (addSoft)="onAddSoft($event)"
             (updateSoft)="onUpdateSoft($event)"
             (articleStat)="articleStat($event)"
+            (invNumberClick)="invNumberClick($event)"
           ></app-table-soft>
         </div>
       </div>

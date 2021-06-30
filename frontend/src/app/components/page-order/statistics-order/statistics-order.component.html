@@ -8,7 +8,11 @@
     </tr>
     <tr class="td">
       <ng-container *ngFor="let item of statArray">
-        <td class="td">{{item.count}}</td>
+        <td class="td">
+          <abbr title="Количество переустановленных АРМ и часов потранных на это в {{item.year}} году">
+            {{item.count}}
+          </abbr>
+        </td>
       </ng-container>
     </tr>
   </table>

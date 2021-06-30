@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {StatisticsArray} from '../../../model/allclass';
+import {StatisticsArrayOrder} from '../../../model/allclass';
 
 @Component({
   selector: 'app-statistics-order',
@@ -8,7 +8,7 @@ import {StatisticsArray} from '../../../model/allclass';
 })
 export class StatisticsOrderComponent implements OnInit {
 
-  @Input() statArray: StatisticsArray[];
+  @Input() statArray: StatisticsArrayOrder[];
 
   constructor() { }
 

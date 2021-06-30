@@ -1,12 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DateFind} from '../../../model/allclass';
+import {DateFind} from '../../model/allclass';
 
 @Component({
-  selector: 'app-filter-order',
-  templateUrl: './filter-order.component.html',
-  styleUrls: ['./filter-order.component.css']
+  selector: 'app-filter-data',
+  templateUrl: './filter-data.component.html',
+  styleUrls: ['./filter-data.component.css']
 })
-export class FilterOrderComponent implements OnInit {
+export class FilterDataComponent implements OnInit {
 
   @Output()
   dateFilterOut = new EventEmitter<DateFind>();
@@ -22,7 +22,6 @@ export class FilterOrderComponent implements OnInit {
     this.dateFinish = new Date();
     this.dateFilter = new DateFind(this.dateStart, this.dateFinish);
   }
-
   startSearch(): void {
     if (this.dateFilter.dateStart > this.dateFilter.dateFinish) {
       this.dateFilter.dateFinish = this.dateFilter.dateStart;
@@ -34,8 +33,6 @@ export class FilterOrderComponent implements OnInit {
     if (this.dateFilter.dateStart > this.dateFilter.dateFinish) {
       this.dateFilter.dateStart = this.dateFilter.dateFinish;
     }
-    // console.log('dateStart = ', this.dateFilter.dateStart);
-    // console.log('dateFinish = ', this.dateFilter.dateFinish);
     this.dateFilterOut.emit(this.dateFilter);
   }
 
@@ -54,5 +51,4 @@ export class FilterOrderComponent implements OnInit {
     }
     this.dateFilterOut.emit(this.dateFilter);
   }
-
 }

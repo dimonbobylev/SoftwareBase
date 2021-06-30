@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageSoftComponent } from './components/page-soft/page-soft.component';
 import { PageOrderComponent } from './components/page-order/page-order.component';
 import { TableSoftComponent } from './components/page-soft/table-soft/table-soft.component';
-import { FilterSoftComponent } from './components/page-soft/filter-soft/filter-soft.component';
 import { StatisticsSoftComponent } from './components/page-soft/statistics-soft/statistics-soft.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
@@ -23,10 +22,10 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
-import { FilterOrderComponent } from './components/page-order/filter-order/filter-order.component';
 import { StatisticsOrderComponent } from './components/page-order/statistics-order/statistics-order.component';
 import { TableOrderComponent } from './components/page-order/table-order/table-order.component';
 import { EditDialogOrderComponent } from './dialog/edit-dialog-order/edit-dialog-order.component';
+import { FilterDataComponent } from './components/filter-data/filter-data.component';
 
 @NgModule({
   declarations: [
@@ -34,14 +33,13 @@ import { EditDialogOrderComponent } from './dialog/edit-dialog-order/edit-dialog
     PageSoftComponent,
     PageOrderComponent,
     TableSoftComponent,
-    FilterSoftComponent,
     StatisticsSoftComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
-    FilterOrderComponent,
     StatisticsOrderComponent,
     TableOrderComponent,
-    EditDialogOrderComponent
+    EditDialogOrderComponent,
+    FilterDataComponent
   ],
   imports: [
     BrowserModule,

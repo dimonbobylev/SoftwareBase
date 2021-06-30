@@ -5,6 +5,9 @@ import {MatSort} from '@angular/material/sort';
 import {Order} from '../../../model/allclass';
 import {MatDialog} from '@angular/material/dialog';
 import {EditDialogOrderComponent} from '../../../dialog/edit-dialog-order/edit-dialog-order.component';
+import {ConfirmDialogComponent} from '../../../dialog/confirm-dialog/confirm-dialog.component';
+import {DataHandlerService} from '../../../service/data-handler.service';
+
 
 @Component({
   selector: 'app-table-order',
@@ -31,8 +34,13 @@ export class TableOrderComponent implements OnInit {
   }
   @Output()
   addOrder = new EventEmitter<Order>();
+  @Output()
+  deleteOrder = new EventEmitter<Order>();
+  @Output()
+  updateOrder = new EventEmitter<Order>();
 
   constructor(
+    private dataHandler: DataHandlerService, // доступ к данным
     private dialog: MatDialog // работа с диалоговым окном
   ) { }
 
@@ -61,7 +69,7 @@ export class TableOrderComponent implements OnInit {
     this.dataSource.paginator = this.paginator; // обновить компонент постраничности (кол-во записей, страниц)
   }
 
-  openAddSoftDialog(): void {
+  openAddOrderDialog(): void {
     // то же самое, что и при редактировании, но только передаем пустой объект Order
     const order = new Order(null, '', '', new Date(''), null, null, '', '');
 
@@ -74,11 +82,41 @@ export class TableOrderComponent implements OnInit {
     });
   }
 
-  openDeleteDialog(element): void {
+  openDeleteOrderDialog(order: Order): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Подтвердите действие',
+        message: `Вы действительно хотите удалить эталон?`
+      },
+      autoFocus: false
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // если нажали ОК
+        this.deleteOrder.emit(order);
+        // console.log('openDeleteOrderDialog');
+      }
+    });
   }
 
-  openEditDialog(element): void {
+  openEditOrderDialog(element: Order): void {
+    // открытие диалогового окна
+    const dialogRef = this.dialog.open(EditDialogOrderComponent, {data: [element, 'Редактирование'], autoFocus: false});
+    dialogRef.afterClosed().subscribe( result => {
+      if (result === 'delete') {
+        this.deleteOrder.emit(element);
+        return;
+      }
+      // обработка результатов
+      if (result as Order) { // если нажали ОК и есть результат
+        this.updateOrder.emit(result);
+        return;
+      }
+    });
+  }
 
+  exportAsXLSX(): void {
+    this.dataHandler.exportAsExcelFile(this.allOrder, 'order_SPO');
   }
 }

@@ -24,6 +24,8 @@ export class TableSoftComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
 
   allSoft: SoftCD[];
+  articleClick: string;
+  numClick: string;
 
   // текущие задачи для отображения на странице
   @Input('soft')
@@ -39,6 +41,8 @@ export class TableSoftComponent implements OnInit {
   deleteSoft = new EventEmitter<SoftCD>();
   @Output()
   articleStat = new EventEmitter<SoftCD>();
+  @Output()
+  invNumberClick = new EventEmitter<SoftCD>();
 
   constructor(
     private dataHandler: DataHandlerService, // доступ к данным
@@ -62,9 +66,9 @@ export class TableSoftComponent implements OnInit {
     if (!this.dataSource) {
       return;
     }
-    this.dataHandler.softSubject.subscribe(() => {
-      this.dataSource.data = this.allSoft; // обновить источник данных (т.к. данные массива soft обновились)
-    });
+    // this.dataHandler.softSubject.subscribe(() => {
+    //   this.dataSource.data = this.allSoft; // обновить источник данных (т.к. данные массива soft обновились)
+    // });
     this.dataSource.data = this.allSoft; // обновить источник данных (т.к. данные массива soft обновились)
     this.addTableObjects();
   }
@@ -120,9 +124,23 @@ export class TableSoftComponent implements OnInit {
     });
 
   }
-
-  articleStatistics(element): void {
-    this.articleStat.emit(element);
+  // клик на тип изделия
+  articleStatistics(element: SoftCD): void {
+    if (this.articleClick !== element.article) {  //  исключаем множественный запрос по одному и тому же элементу
+      this.articleClick = element.article;
+      this.articleStat.emit(element);
+    }
+  }
+  // клик на инвентарный номер эталона
+  numberClick(element: SoftCD): void {
+    if (this.numClick !== element.inv) {  //  исключаем множественный запрос по одному и тому же элементу
+      // console.log(element.inv);
+      this.numClick = element.inv;
+      this.invNumberClick.emit(element);
+    }
   }
 
+  exportAsXLSX(): void {
+    this.dataHandler.exportAsExcelFile(this.allSoft, 'soft_SPO');
+  }
 }

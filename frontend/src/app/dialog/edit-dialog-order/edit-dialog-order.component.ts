@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Order} from '../../model/allclass';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-edit-dialog-order',
@@ -57,6 +58,19 @@ export class EditDialogOrderComponent implements OnInit {
   }
 
   delete(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Подтвердите действие',
+        message: `Вы действительно хотите удалить приказ КЧ из базы?`
+      },
+      autoFocus: false
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dialogRef.close('delete'); // нажали удалить
+      }
+    });
   }
 }

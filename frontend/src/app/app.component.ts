@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {DateFind, Order, SoftCD, StatisticsArray} from './model/allclass';
+import {DateFind, Order, SoftCD, StatisticsArray, StatisticsArrayOrder} from './model/allclass';
 import {DataHandlerService} from './service/data-handler.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class AppComponent implements OnInit{
   allSoft: SoftCD[];
   allOrder: Order[];
   statisticsArray: StatisticsArray[] = [];
+  statisticsArrayOrder: StatisticsArrayOrder[] = [];
   toggleArticle = true;
   toggleOrder = false;
 
@@ -36,7 +37,7 @@ export class AppComponent implements OnInit{
     this.http.get<any>('http://127.0.0.1:5000/allOrder')
       .subscribe(back => {
         this.allOrder = back;
-        this.statisticsArray = this.dataHandler.getStatistics(this.allOrder);
+        this.statisticsArrayOrder = this.dataHandler.getStatisticsOrder(this.allOrder);
       });
   }
   // добавление эталона
@@ -76,13 +77,36 @@ export class AppComponent implements OnInit{
         this.statisticsArray = this.dataHandler.getStatistics(this.allSoft);
       });
   }
-
+  // клик на инвентарный номер эталона
+  invNumberClick(elementSoft: SoftCD): void {
+    this.toggleArticle = false;
+    this.toggleOrder = true;
+    this.http.post<any>('http://127.0.0.1:5000/invClick', elementSoft)
+      .subscribe(back => this.allOrder = back);
+  }
+  // добавление приказа КЧ
   onAddOrder(order: Order): void {
     this.http.post<any>('http://127.0.0.1:5000/onAddOrder', order)
       .subscribe(back => {
         this.allOrder = back;
-        // console.log(this.allOrder);
-        this.statisticsArray = this.dataHandler.getStatistics(this.allOrder);
+        this.statisticsArrayOrder = this.dataHandler.getStatisticsOrder(this.allOrder);
+      });
+  }
+  // удаление приказа КЧ
+  onDeleteOrder(order: Order): void {
+    this.http.post<any>('http://127.0.0.1:5000/onDeleteOrder', order)
+      .subscribe(back => {
+        this.allOrder = back;
+        this.statisticsArrayOrder = this.dataHandler.getStatisticsOrder(this.allOrder);
+      });
+  }
+  // обновление приказа КЧ
+  onUpdateOrder(order: Order): void {
+    this.http.post<any>('http://127.0.0.1:5000/onUpdateOrder', order)
+      .subscribe(back => {
+        // console.log('onUpdateSoft: ' , back);
+        this.allOrder = back;
+        this.statisticsArrayOrder = this.dataHandler.getStatisticsOrder(this.allOrder);
       });
   }
 }
