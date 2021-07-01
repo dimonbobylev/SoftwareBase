@@ -26,5 +26,4 @@ def array_order(result):
         data_order['act'] = res[6]
         data_order['title'] = res[7]
         list_bd.append(data_order)
-
     return list_bd

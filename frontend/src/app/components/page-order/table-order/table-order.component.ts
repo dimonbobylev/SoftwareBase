@@ -25,6 +25,7 @@ export class TableOrderComponent implements OnInit {
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
 
   allOrder: Order[];
+  onCreateFile = false;
 
   // текущие задачи для отображения на странице
   @Input('orders')
@@ -38,6 +39,8 @@ export class TableOrderComponent implements OnInit {
   deleteOrder = new EventEmitter<Order>();
   @Output()
   updateOrder = new EventEmitter<Order>();
+  @Output()
+  onCreateFileOrder = new EventEmitter<boolean>();
 
   constructor(
     private dataHandler: DataHandlerService, // доступ к данным
@@ -116,7 +119,8 @@ export class TableOrderComponent implements OnInit {
     });
   }
 
-  exportAsXLSX(): void {
-    this.dataHandler.exportAsExcelFile(this.allOrder, 'order_SPO');
+  createFile(): void {
+    this.onCreateFile = true;
+    this.onCreateFileOrder.emit(this.onCreateFile);
   }
 }

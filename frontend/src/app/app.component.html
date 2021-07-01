@@ -22,6 +22,7 @@
     (deleteSoft)="onDeleteSoft($event)"
     (dateFilterOut)="dateFilter($event)"
     (invNumClick)="invNumberClick($event)"
+    (onCreateFile)="createFileSoft()"
   ></app-page-soft>
 </div>
 <div class="main-content" *ngIf="toggleOrder">
@@ -31,5 +32,6 @@
     (addOrder)="onAddOrder($event)"
     (deleteOrder)="onDeleteOrder($event)"
     (updateOrder)="onUpdateOrder($event)"
+    (onCreateFile)="createFileOrder()"
   ></app-page-order>
 </div>

@@ -4,7 +4,10 @@ import sqlite3 as sq
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base
+import os
 import result
+import table
+
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +27,8 @@ def soft_cd():
             cur = con.cursor()
             cur.execute("SELECT * FROM soft ORDER BY date")
             res = cur.fetchall()
+            # for rs in res:
+            #     print(rs)
             list_bd = result.array_json(res)
     except sq.Error:
         session.rollback()
@@ -240,6 +245,83 @@ def update_order():
         session.rollback()
         print("Ошибка обновления БД")
     return jsonify(list_bd)
+
+
+@app.route("/onCreateFile", methods=['POST'])
+def create_file_soft():
+    f = request.json
+    try:
+        with sq.connect("soft-collection.db") as con:
+            cur = con.cursor()
+            sql_update = "SELECT * FROM soft WHERE date BETWEEN " + "'" + str(f['dateStart']) + "'" + \
+                         " AND " + "'" + str(f['dateFinish']) + "' ORDER BY date"
+            # print(sql_update)
+            cur.execute(sql_update)
+            res = cur.fetchall()
+            doc_new = table.Document_Template()
+            doc_new.addParagraph("Поставки СПО", "heading2")
+            new_array = []
+            ii = 0
+            for rs in res:
+                ii = ii + 1
+                (a, b, c, d, i, f) = rs
+                # print(str(d)[0:10])
+                new_rs = (ii, b, str(c)[0:10], d, i)
+                new_array.append(new_rs)
+            doc_new.add_table(new_array, "tablecontents",
+                              [
+                                  {"numbercolumnsrepeated": 1, "stylename": "column1"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column2"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column2"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column2"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column2"},
+                              ]
+                              )
+            doc_new.save("tab_soft.odt")
+            os.system('libreoffice --view tab_soft.odt')
+    except sq.Error:
+        session.rollback()
+        print("Ошибка фильтрации БД")
+    return jsonify('Файл создан')
+
+
+@app.route("/onCreateFileOrder", methods=['POST'])
+def create_file_order():
+    f = request.json
+    try:
+        with sq.connect("soft-collection.db") as con:
+            cur = con.cursor()
+            sql_update = "SELECT * FROM orderKCh WHERE date BETWEEN " + "'" + str(f['dateStart']) + "'" + \
+                         " AND " + "'" + str(f['dateFinish']) + "' ORDER BY date"
+            # print(sql_update)
+            cur.execute(sql_update)
+            res = cur.fetchall()
+            doc_new = table.Document_Template()
+            doc_new.addParagraph("Приказы КЧ", "heading2")
+            new_array = []
+            ii = 0
+            for rs in res:
+                ii = ii + 1
+                (a, b, c, d, i, f, g, k) = rs
+                # print(str(d)[0:10])
+                new_rs = (ii, b, c, str(d)[0:10], g)
+                new_array.append(new_rs)
+            # print(new_array)
+            doc_new.add_table(new_array, "tablecontents",
+                              [
+                                  {"numbercolumnsrepeated": 1, "stylename": "column1"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column3"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column3"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column3"},
+                                  {"numbercolumnsrepeated": 1, "stylename": "column4"},
+                              ]
+                              )
+            doc_new.save("tab_order.odt")
+            os.system('libreoffice --view tab_order.odt')
+    except sq.Error:
+        session.rollback()
+        print("Ошибка фильтрации БД")
+    return jsonify('Файл создан')
 
 
 if __name__ == '__main__':

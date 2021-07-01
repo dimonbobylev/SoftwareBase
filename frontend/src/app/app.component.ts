@@ -11,6 +11,7 @@ import {DataHandlerService} from './service/data-handler.service';
 export class AppComponent implements OnInit{
   allSoft: SoftCD[];
   allOrder: Order[];
+  onDateFilter: DateFind;
   statisticsArray: StatisticsArray[] = [];
   statisticsArrayOrder: StatisticsArrayOrder[] = [];
   toggleArticle = true;
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.getSoft();
+    this.onDateFilter = new DateFind(new Date(2019, 1, 1), new Date());
   }
 
   toggleArticleClick(): void {
@@ -67,6 +69,7 @@ export class AppComponent implements OnInit{
   }
   // выборка эталонов по дате
   dateFilter(dateFil: DateFind): void {
+    this.onDateFilter = dateFil;
     this.http.post<any>('http://127.0.0.1:5000/onDateFilter', dateFil)
       .subscribe(back => this.allSoft = back);
   }
@@ -108,5 +111,15 @@ export class AppComponent implements OnInit{
         this.allOrder = back;
         this.statisticsArrayOrder = this.dataHandler.getStatisticsOrder(this.allOrder);
       });
+  }
+
+  createFileSoft(): void {
+    this.http.post<any>('http://127.0.0.1:5000/onCreateFile', this.onDateFilter)
+      .subscribe();
+  }
+
+  createFileOrder(): void {
+    this.http.post<any>('http://127.0.0.1:5000/onCreateFileOrder', this.onDateFilter)
+      .subscribe();
   }
 }

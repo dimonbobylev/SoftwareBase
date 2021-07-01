@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../../dialog/confirm-dialog/confirm-dialog.component';
 import {EditDialogComponent} from '../../../dialog/edit-dialog/edit-dialog.component';
 import {DataHandlerService} from '../../../service/data-handler.service';
+import {THREE} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-table-soft',
@@ -26,6 +27,7 @@ export class TableSoftComponent implements OnInit {
   allSoft: SoftCD[];
   articleClick: string;
   numClick: string;
+  onCreateFile = false;
 
   // текущие задачи для отображения на странице
   @Input('soft')
@@ -43,6 +45,8 @@ export class TableSoftComponent implements OnInit {
   articleStat = new EventEmitter<SoftCD>();
   @Output()
   invNumberClick = new EventEmitter<SoftCD>();
+  @Output()
+  onCreateFileSoft = new EventEmitter<boolean>();
 
   constructor(
     private dataHandler: DataHandlerService, // доступ к данным
@@ -140,7 +144,8 @@ export class TableSoftComponent implements OnInit {
     }
   }
 
-  exportAsXLSX(): void {
-    this.dataHandler.exportAsExcelFile(this.allSoft, 'soft_SPO');
+  createFile(): void {
+    this.onCreateFile = true;
+    this.onCreateFileSoft.emit(this.onCreateFile);
   }
 }

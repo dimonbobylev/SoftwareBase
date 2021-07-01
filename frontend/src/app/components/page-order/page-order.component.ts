@@ -17,6 +17,8 @@ export class PageOrderComponent implements OnInit {
   deleteOrder = new EventEmitter<Order>();
   @Output()
   updateOrder = new EventEmitter<Order>();
+  @Output()
+  onCreateFile = new EventEmitter<boolean>();
 
   constructor(private http: HttpClient) { }
 
@@ -36,5 +38,10 @@ export class PageOrderComponent implements OnInit {
   dateFilter(dateFil: DateFind): void {
     this.http.post<any>('http://127.0.0.1:5000/onDateFilterOrder', dateFil)
       .subscribe(back => this.allOrder = back);
+  }
+
+  createFile(create: boolean): void {
+    this.onCreateFile.emit(create);
+    // console.log('PageSoftComponent ', create);
   }
 }

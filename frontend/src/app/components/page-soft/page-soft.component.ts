@@ -24,6 +24,8 @@ export class PageSoftComponent implements OnInit {
   invNumClick = new EventEmitter<SoftCD>();
   @Output()
   dateFilterOut = new EventEmitter<DateFind>();
+  @Output()
+  onCreateFile = new EventEmitter<boolean>();
   @Input() statArray: StatisticsArray[];
 
   constructor(
@@ -60,5 +62,10 @@ export class PageSoftComponent implements OnInit {
 
   invNumberClick(invClick: SoftCD): void {
     this.invNumClick.emit(invClick);
+  }
+
+  createFile(create: boolean): void {
+    this.onCreateFile.emit(create);
+    // console.log('PageSoftComponent ', create);
   }
 }
